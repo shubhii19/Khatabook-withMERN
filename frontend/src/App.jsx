@@ -4,11 +4,13 @@ import Navbar from './components/Navbar';
 import CreateHisaab from './components/CreateHisaab';
 import Login from './components/Login';
 import Register from './components/Register';
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
     <div>
+       <ToastContainer />
       <Navbar /> {/* Optional Navbar */}
       
       <Routes>

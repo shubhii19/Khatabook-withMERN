@@ -3,7 +3,7 @@ const userModel = require("../models/userModel.js");
 
 module.exports.createHisaabController = async function (req, res) {
   let { title, description, encrypted, shareable, passcode, editpermissions } = req.body;
-
+console.log('received hissab body: ',req.body)
   encrypted = encrypted === 'on' || encrypted === true;
   shareable = shareable === 'on' || shareable === true;
   editpermissions = editpermissions === 'on' || editpermissions === true;
@@ -41,7 +41,7 @@ module.exports.readHisaabController = async function (req, res) {
     if (hisaab.encrypted) {
       return res.status(403).json({ requiresPasscode: true });
     }
-
+console.log('hisaab mil gya')
     return res.status(200).json({ hisaab });
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -60,6 +60,7 @@ module.exports.readVerifiedHisaabController = async function (req, res) {
       return res.status(403).json({ error: "Invalid passcode" });
     }
 
+    console.log('verified hisaab mil gya')
     return res.status(200).json({ hisaab });
   } catch (err) {
     return res.status(500).json({ error: err.message });

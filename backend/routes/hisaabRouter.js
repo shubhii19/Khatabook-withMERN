@@ -13,7 +13,7 @@ const {
 const { isLoggedIn } = require("../middlewares/middleware.js");
 
 // Create a new hisaab
-router.post("/", isLoggedIn, createHisaabController);
+router.post("/create", isLoggedIn, createHisaabController);
 
 // Read a hisaab (unauthenticated if public or non-encrypted)
 router.get("/:id", isLoggedIn, readHisaabController);
