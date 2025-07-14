@@ -40,7 +40,8 @@ module.exports.registerController = async function (req, res) {
 
 module.exports.loginController = async function (req, res) {
   const { email, password } = req.body;
-
+  console.log("received body: ",req.body);
+console.log(email,password)
   try {
     const user = await userModel.findOne({ email }).select('+password');
     if (!user) {
@@ -58,10 +59,10 @@ module.exports.loginController = async function (req, res) {
 
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      // secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
     });
-
+console.log('Login successful')
     return res.status(200).json({ message: 'Login successful', user: { id: user._id, username: user.username, email: user.email } });
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -69,6 +70,7 @@ module.exports.loginController = async function (req, res) {
 };
 
 module.exports.logoutController = function (req, res) {
+  console.log("logout")
   res.clearCookie('token');
   return res.status(200).json({ message: 'Logout successful' });
 };

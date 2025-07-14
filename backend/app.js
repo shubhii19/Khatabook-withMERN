@@ -21,7 +21,7 @@ app.use(cors({
   credentials: true
 }));
 
-app.use('/', indexRouter);
+app.use('/user', indexRouter);
 app.use('/hisaab',hisaabRouter);
 
 
