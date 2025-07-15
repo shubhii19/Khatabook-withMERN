@@ -40,17 +40,23 @@ module.exports.registerController = async function (req, res) {
 
 module.exports.loginController = async function (req, res) {
   const { email, password } = req.body;
-  console.log("received body: ",req.body);
-console.log(email,password)
+  console.log("received body: ", req.body);
+
   try {
     const user = await userModel.findOne({ email }).select('+password');
     if (!user) {
-      return res.status(404).json({ error: 'No account found. Please register.' });
+      return res.status(404).json({
+        success: false,
+        message: 'No account found. Please register.',
+      });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ error: 'Incorrect credentials.' });
+      return res.status(401).json({
+        success: false,
+        message: 'Incorrect credentials.',
+      });
     }
 
     const token = jwt.sign({ id: user._id, email: user.email }, process.env.SECRET_KEY, {
@@ -59,15 +65,28 @@ console.log(email,password)
 
     res.cookie('token', token, {
       httpOnly: true,
-      // secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
     });
-console.log('Login successful')
-    return res.status(200).json({ message: 'Login successful', user: { id: user._id, username: user.username, email: user.email } });
+
+    return res.status(200).json({
+      success: true, // ✅ required by frontend
+      message: 'Login successful',
+      token,         // ✅ optional if needed on frontend
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+    });
+
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 };
+
 
 module.exports.logoutController = function (req, res) {
   console.log("logout")

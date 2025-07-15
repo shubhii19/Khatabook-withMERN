@@ -1,19 +1,37 @@
-
-
-
-
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
+  const { backendUrl } = useContext(AppContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [token, setToken] = useState('')
+  console.log(backendUrl);
+  const navigate = useNavigate();
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-    // handle login here
-  };
+    try {
+      const { data } = await axios.post(
+        backendUrl + "/user/api/login",
+        { email, password },
+        { withCredentials: true }
+      );
+      console.log(data)
 
-  return (
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+        setToken(data.token);
+        console.log(data.token)
+      }
+      navigate('/home')
+    } catch (err) {
+      console.log(err)
+    }
+  };
+  return !token &&  (
     <form className="min-h-[80vh] flex items-center" onSubmit={onSubmitHandler}>
       <div className="flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border border-zinc-400 rounded-xl text-zinc-600 text-sm shadow-lg">
         <p className="text-2xl font-semibold">Login</p>
@@ -41,7 +59,10 @@ const Login = () => {
           />
         </div>
 
-        <button type="submit" className="bg-[#5F6FFF] text-white w-full py-2 rounded-md text-base">
+        <button
+          type="submit"
+          className="bg-[#5F6FFF] text-white w-full py-2 rounded-md text-base"
+        >
           Login
         </button>
       </div>
