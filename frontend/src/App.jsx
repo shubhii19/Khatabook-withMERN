@@ -45,7 +45,7 @@ const App = () => {
   return (
     <div>
       <ToastContainer />
-      {/* <Navbar /> */}
+      <Navbar />
 
       <Routes>
         {/* Redirect root based on token */}
