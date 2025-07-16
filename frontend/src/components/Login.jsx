@@ -19,7 +19,7 @@ const Login = () => {
         { email, password },
         { withCredentials: true }
       );
-      console.log(data)
+      console.log(data.user,'data frfom')
 
       if (data.success) {
         localStorage.setItem("token", data.token);
@@ -35,7 +35,6 @@ const Login = () => {
     <form className="min-h-[80vh] flex items-center" onSubmit={onSubmitHandler}>
       <div className="flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border border-zinc-400 rounded-xl text-zinc-600 text-sm shadow-lg">
         <p className="text-2xl font-semibold">Login</p>
-        <p>Please log in to book an appointment</p>
 
         <div className="w-full">
           <p>Email</p>

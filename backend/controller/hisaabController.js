@@ -115,3 +115,16 @@ module.exports.editPostHisaabController = async function (req, res) {
     return res.status(500).json({ error: err.message });
   }
 };
+
+
+module.exports.readAllHisaabController = async(req,res)=>{
+  try {
+    const userId = req.user._id;
+
+    const hisaabs = await hisaabModel.find({ user: userId });
+    console.log(hisaabs)
+    return res.status(200).json({ hisaabs });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}

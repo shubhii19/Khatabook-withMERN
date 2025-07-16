@@ -10,7 +10,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(backendUrl + "/user/api/logout", null, {
+       await axios.post(backendUrl + "/user/api/logout", null, {
         withCredentials: true,
       });
 
@@ -23,6 +23,7 @@ const Navbar = () => {
       toast.error("Error during logout!");
     }
   };
+  
   useEffect(() => {
     const localToken = localStorage.getItem("token");
     if (localToken && !token) {

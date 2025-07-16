@@ -8,6 +8,7 @@ const {
   editHisaabController,
   editPostHisaabController,
   readVerifiedHisaabController,
+  readAllHisaabController,
 } = require("../controller/hisaabController.js");
 
 const { isLoggedIn } = require("../middlewares/middleware.js");
@@ -29,5 +30,8 @@ router.put("/:id", isLoggedIn, editPostHisaabController);
 
 // Delete a hisaab
 router.delete("/:id", isLoggedIn, deleteController);
+
+// read all hisaab of particular user
+router.get("/user/all", isLoggedIn, readAllHisaabController);
 
 module.exports = router;
