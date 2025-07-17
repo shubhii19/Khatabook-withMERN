@@ -1,21 +1,55 @@
 const hisaabModel = require("../models/hisaabModel.js");
 const userModel = require("../models/userModel.js");
 
-module.exports.createHisaabController = async function (req, res) {
-  let { title, description, encrypted, shareable, passcode, editpermissions } = req.body;
-console.log('received hissab body: ',req.body)
-  encrypted = encrypted === 'on' || encrypted === true;
-  shareable = shareable === 'on' || shareable === true;
-  editpermissions = editpermissions === 'on' || editpermissions === true;
+// module.exports.createHisaabController = async function (req, res) {
+//   let { title, description, encrypted, shareable, passcode, editpermissions } = req.body;
+// console.log('received hissab body: ',req.body)
+//   encrypted = encrypted === 'on' || encrypted === true;
+//   shareable = shareable === 'on' || shareable === true;
+//   editpermissions = editpermissions === 'on' || editpermissions === true;
 
+//   try {
+//     const hisaab = await hisaabModel.create({
+//       title,
+//       description,
+//       encrypted,
+//       shareable,
+//       passcode,
+//       editpermissions,
+//       user: req.user._id,
+//     });
+
+//     const user = await userModel.findOne({ email: req.user.email });
+//     user.hisaabs.push(hisaab._id);
+//     await user.save();
+
+//     return res.status(201).json({ message: "Hisaab created successfully", hisaab });
+//   } catch (err) {
+//     return res.status(500).json({ error: err.message });
+//   }
+// };
+
+
+module.exports.createHisaabController = async function (req, res) {
   try {
+    const {
+      title,
+      description,
+      encrypted = false,
+      shareable = false,
+      passcode = "",
+      editpermissions = false,
+    } = req.body;
+
+    console.log("Received hisaab body:", req.body);
+
     const hisaab = await hisaabModel.create({
       title,
       description,
-      encrypted,
-      shareable,
+      encrypted: Boolean(encrypted),
+      shareable: Boolean(shareable),
       passcode,
-      editpermissions,
+      editpermissions: Boolean(editpermissions),
       user: req.user._id,
     });
 
@@ -23,7 +57,10 @@ console.log('received hissab body: ',req.body)
     user.hisaabs.push(hisaab._id);
     await user.save();
 
-    return res.status(201).json({ message: "Hisaab created successfully", hisaab });
+    return res.status(201).json({
+      message: "Hisaab created successfully",
+      hisaab,
+    });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

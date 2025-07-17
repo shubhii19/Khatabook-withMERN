@@ -6,19 +6,22 @@ import HisaabCard from "./HisaabCard";
 const Home = () => {
   const { token, setToken, backendUrl } = useContext(AppContext);
   const [hisaabs, setHisaabs] = useState([]);
-
+console.log(backendUrl)
   const fetchHisaabs = async () => {
     try {
-      const res = await axios.get(`${backendUrl}/hisaab/user/all`, {
+      // http://localhost:3000/hisaab/user/all
+      const res = await axios.get(backendUrl+'/hisaab/user/all', {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(res)
       const data = res.data.hisaabs;
       console.log(data, "hisaabs received");
       setHisaabs(data);
     } catch (err) {
+      console.log(err.message)
       console.error("Failed to fetch hisaabs:", err);
     }
   };
