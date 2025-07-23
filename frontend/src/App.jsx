@@ -19,14 +19,13 @@
 //         <Route path="/login" element={<Login />} />
 //         <Route path="/register" element={<Register />} />
 //         <Route path="/hisaab/create" element={<CreateHisaab />} />
-        
+
 //       </Routes>
 //     </div>
 //   );
 // };
 
 // export default App;
-
 
 import React, { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -47,16 +46,26 @@ const App = () => {
       <ToastContainer />
       <Navbar />
 
-      <Routes>
-        {/* Redirect root based on token */}
-        <Route path="/home" element={<Home/>}/>
+      {/* <Routes> */}
+        {/* Redirect root based on token
+        <Route path="/home" element={<Home/>}/> */}
+        {/* <Route
+          path="/"
+          element={<Navigate to={token ? "/home" : "/login"} replace />}
+        /> */}
+
+        {/* ✅ Protected home route */}
+        {/* <Route
+          path="/home"
+          element={token ? <Home /> : <Navigate to="/login" />}
+        /> */}
 
         {/* Public routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        {/* <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} /> */}
 
         {/* Protected routes */}
-        <Route
+        {/* <Route
           path="/home"
           element={token ? <Home /> : <Navigate to="/login" />}
         />
@@ -64,7 +73,31 @@ const App = () => {
           path="/hisaab/create"
           element={token ? <CreateHisaab /> : <Navigate to="/login" />}
         />
-      </Routes>
+      </Routes> */}
+      <Routes>
+  {/* Redirect root based on token */}
+  <Route
+    path="/"
+    element={<Navigate to={token ? "/home" : "/login"} replace />}
+  />
+
+  {/* Protected home route */}
+  <Route
+    path="/home"
+    element={token ? <Home /> : <Navigate to="/login" />}
+  />
+
+  {/* Public routes */}
+  <Route path="/login" element={<Login />} />
+  <Route path="/register" element={<Register />} />
+
+  {/* Protected routes */}
+  <Route
+    path="/hisaab/create"
+    element={token ? <CreateHisaab /> : <Navigate to="/login" />}
+  />
+</Routes>
+
     </div>
   );
 };

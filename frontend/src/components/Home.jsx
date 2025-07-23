@@ -31,6 +31,7 @@ console.log(backendUrl)
     if (localToken && !token) {
       setToken(localToken);
     }
+    fetchHisaabs();
   }, [token, setToken]);
 
   useEffect(() => {
