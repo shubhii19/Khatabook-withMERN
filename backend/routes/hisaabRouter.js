@@ -17,7 +17,7 @@ const { isLoggedIn } = require("../middlewares/middleware.js");
 router.post("/create", isLoggedIn, createHisaabController);
 
 // Read a hisaab (unauthenticated if public or non-encrypted)
-router.get("/:id", isLoggedIn, readHisaabController);
+router.get("/view/:id", isLoggedIn, readHisaabController);
 
 // Verify passcode to read encrypted hisaab
 router.post("/verify/:id", isLoggedIn, readVerifiedHisaabController);

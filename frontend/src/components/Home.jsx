@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import HisaabCard from "./HisaabCard";
+import Navbar from "./Navbar";
 
 const Home = () => {
   const { token, setToken, backendUrl } = useContext(AppContext);
@@ -16,7 +17,7 @@ console.log(backendUrl)
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res)
+      console.log(res,"res")
       const data = res.data.hisaabs;
       console.log(data, "hisaabs received");
       setHisaabs(data);
@@ -41,8 +42,11 @@ console.log(backendUrl)
   }, [token]);
 
   return (
-    token && (
+    token  && (
+      <>
+       <Navbar/>
       <div className="min-h-screen bg-gray-100 py-10">
+        
         <div className="max-w-7xl mx-auto px-4">
           <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">
             Your Hisaabs
@@ -55,6 +59,7 @@ console.log(backendUrl)
           </div>
         </div>
       </div>
+      </>
     )
   );
 };

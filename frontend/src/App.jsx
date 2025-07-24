@@ -37,6 +37,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./components/Home";
 import { AppContext } from "./context/AppContext"; // don't forget to import this
+import ViewHisaab from "./components/ViewHisaab";
 
 const App = () => {
   const { token } = useContext(AppContext); // ✅ get token from context
@@ -44,7 +45,7 @@ const App = () => {
   return (
     <div>
       <ToastContainer />
-      <Navbar />
+      {/* <Navbar /> */}
 
       {/* <Routes> */}
         {/* Redirect root based on token
@@ -96,6 +97,7 @@ const App = () => {
     path="/hisaab/create"
     element={token ? <CreateHisaab /> : <Navigate to="/login" />}
   />
+  <Route path="/hisaab/view/:id" element={<ViewHisaab/>}/>
 </Routes>
 
     </div>
@@ -103,3 +105,4 @@ const App = () => {
 };
 
 export default App;
+            
