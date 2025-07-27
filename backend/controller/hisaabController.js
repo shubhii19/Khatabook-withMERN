@@ -30,6 +30,42 @@ const userModel = require("../models/userModel.js");
 // };
 
 
+// module.exports.createHisaabController = async function (req, res) {
+//   try {
+//     const {
+//       title,
+//       description,
+//       encrypted = false,
+//       shareable = false,
+//       passcode = "",
+//       editpermissions = false,
+//     } = req.body;
+
+//     console.log("Received hisaab body:", req.body);
+
+//     const hisaab = await hisaabModel.create({
+//       title,
+//       description,
+//       encrypted: Boolean(encrypted),
+//       shareable: Boolean(shareable),
+//       passcode,
+//       editpermissions: Boolean(editpermissions),
+//       user: req.user._id,
+//     });
+
+//     const user = await userModel.findOne({ email: req.user.email });
+//     user.hisaabs.push(hisaab._id);
+//     await user.save();
+
+//     return res.status(201).json({
+//       message: "Hisaab created successfully",
+//       hisaab,
+//     });
+//   } catch (err) {
+//     return res.status(500).json({ error: err.message });
+//   }
+// };
+
 module.exports.createHisaabController = async function (req, res) {
   try {
     const {
@@ -39,6 +75,7 @@ module.exports.createHisaabController = async function (req, res) {
       shareable = false,
       passcode = "",
       editpermissions = false,
+      amount = 0, // <-- Added default value for amount
     } = req.body;
 
     console.log("Received hisaab body:", req.body);
@@ -50,6 +87,7 @@ module.exports.createHisaabController = async function (req, res) {
       shareable: Boolean(shareable),
       passcode,
       editpermissions: Boolean(editpermissions),
+      amount: Number(amount), // <-- Save amount
       user: req.user._id,
     });
 
@@ -65,6 +103,7 @@ module.exports.createHisaabController = async function (req, res) {
     return res.status(500).json({ error: err.message });
   }
 };
+
 
 module.exports.readHisaabController = async function (req, res) {
   const id = req.params.id;
@@ -131,6 +170,28 @@ module.exports.editHisaabController = async function (req, res) {
   }
 };
 
+// module.exports.editPostHisaabController = async function (req, res) {
+//   const id = req.params.id;
+
+//   try {
+//     const hisaab = await hisaabModel.findById(id);
+//     if (!hisaab) return res.status(404).json({ error: "Hisaab not found" });
+
+//     hisaab.title = req.body.title;
+//     hisaab.description = req.body.description;
+//     hisaab.encrypted = req.body.encrypted === 'on' || req.body.encrypted === true;
+//     hisaab.shareable = req.body.shareable === 'on' || req.body.shareable === true;
+//     hisaab.passcode = req.body.passcode;
+//     hisaab.editpermissions = req.body.editpermissions === 'on' || req.body.editpermissions === true;
+
+//     await hisaab.save();
+
+//     return res.status(200).json({ message: "Hisaab updated successfully", hisaab });
+//   } catch (err) {
+//     return res.status(500).json({ error: err.message });
+//   }
+// };
+
 module.exports.editPostHisaabController = async function (req, res) {
   const id = req.params.id;
 
@@ -140,6 +201,7 @@ module.exports.editPostHisaabController = async function (req, res) {
 
     hisaab.title = req.body.title;
     hisaab.description = req.body.description;
+    hisaab.amount = req.body.amount;  // <-- amount add kiya
     hisaab.encrypted = req.body.encrypted === 'on' || req.body.encrypted === true;
     hisaab.shareable = req.body.shareable === 'on' || req.body.shareable === true;
     hisaab.passcode = req.body.passcode;
@@ -152,6 +214,7 @@ module.exports.editPostHisaabController = async function (req, res) {
     return res.status(500).json({ error: err.message });
   }
 };
+
 
 
 module.exports.readAllHisaabController = async(req,res)=>{

@@ -1,26 +1,63 @@
+// const mongoose = require('mongoose');
+
+// const  hisaabSchema = mongoose.Schema({
+//     title:String,
+//     description:String,
+//     user:[{type:mongoose.Schema.Types.ObjectId, ref:"user"}],
+//     encrypted:{
+//         type:Boolean,
+//         default:false,
+//     },
+//     shareable:{
+//         type:Boolean,
+//         default:false,
+//     },
+//     passcode:{
+//         type:String,
+//         default:"",
+//     },
+//     editpermissions:{
+//         type:String,
+//         default:false,
+//     }
+// },{timestamps:true}
+// )
+
+// module.exports = mongoose.model('hisaab',hisaabSchema)
+
+
+
+
+
+
+
 const mongoose = require('mongoose');
 
-const  hisaabSchema = mongoose.Schema({
-    title:String,
-    description:String,
-    user:[{type:mongoose.Schema.Types.ObjectId, ref:"user"}],
-    encrypted:{
-        type:Boolean,
-        default:false,
+const hisaabSchema = mongoose.Schema({
+    title: String,
+    description: String,
+    amount: {
+        type: Number,
+        required: true,
+        default:0
     },
-    shareable:{
-        type:Boolean,
-        default:false,
+    user: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+    encrypted: {
+        type: Boolean,
+        default: false,
     },
-    passcode:{
-        type:String,
-        default:"",
+    shareable: {
+        type: Boolean,
+        default: false,
     },
-    editpermissions:{
-        type:String,
-        default:false,
+    passcode: {
+        type: String,
+        default: "",
+    },
+    editpermissions: {
+        type: String,
+        default: false,
     }
-},{timestamps:true}
-)
+}, { timestamps: true });
 
-module.exports = mongoose.model('hisaab',hisaabSchema)
+module.exports = mongoose.model('hisaab', hisaabSchema);
