@@ -38,6 +38,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Home from "./components/Home";
 import { AppContext } from "./context/AppContext"; // don't forget to import this
 import ViewHisaab from "./components/ViewHisaab";
+import EditHisaab from "./components/EditHisaab ";
 
 const App = () => {
   const { token } = useContext(AppContext); // ✅ get token from context
@@ -98,6 +99,7 @@ const App = () => {
     element={token ? <CreateHisaab /> : <Navigate to="/login" />}
   />
   <Route path="/hisaab/view/:id" element={<ViewHisaab/>}/>
+  <Route path="/hisaab/edit/:id" element={<EditHisaab/>}/>
 </Routes>
 
     </div>

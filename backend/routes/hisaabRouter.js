@@ -26,7 +26,7 @@ router.post("/verify/:id", isLoggedIn, readVerifiedHisaabController);
 router.get("/edit/:id", isLoggedIn, editHisaabController);
 
 // Update an existing hisaab
-router.put("/:id", isLoggedIn, editPostHisaabController);
+router.put("/edit/:id", isLoggedIn, editPostHisaabController);
 
 // Delete a hisaab
 router.delete("/:id", isLoggedIn, deleteController);
