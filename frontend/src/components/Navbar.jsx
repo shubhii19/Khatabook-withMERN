@@ -71,7 +71,11 @@ const Navbar = () => {
       localStorage.removeItem("token");
       setToken(null);
       toast.success("Logged out successfully!");
-      navigate("/login");
+      // navigate("/login");
+      console.log('navigated')
+      navigate("/");
+      
+
     } catch (err) {
       toast.error("Error during logout!");
     }
@@ -86,7 +90,8 @@ const Navbar = () => {
 
   return (
     token &&
-    token !== "null" && (
+    token !== "null" && 
+    (
       <nav className="bg-white shadow-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <NavLink to="/home">

@@ -39,6 +39,7 @@ import Home from "./components/Home";
 import { AppContext } from "./context/AppContext"; // don't forget to import this
 import ViewHisaab from "./components/ViewHisaab";
 import EditHisaab from "./components/EditHisaab ";
+import Welcome from "./components/Welcome";
 
 const App = () => {
   const { token } = useContext(AppContext); // ✅ get token from context
@@ -78,10 +79,10 @@ const App = () => {
       </Routes> */}
       <Routes>
   {/* Redirect root based on token */}
-  <Route
+  {/* <Route
     path="/"
     element={<Navigate to={token ? "/home" : "/login"} replace />}
-  />
+  /> */}
 
   {/* Protected home route */}
   <Route
@@ -100,6 +101,7 @@ const App = () => {
   />
   <Route path="/hisaab/view/:id" element={<ViewHisaab/>}/>
   <Route path="/hisaab/edit/:id" element={<EditHisaab/>}/>
+  <Route path="/" element={<Welcome/>}/>
 </Routes>
 
     </div>
