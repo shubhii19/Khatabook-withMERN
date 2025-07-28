@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navbar from "./Navbar";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const { backendUrl, setToken } = useContext(AppContext); // Use context token
+  const { backendUrl, setToken } = useContext(AppContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -21,65 +20,62 @@ const Login = () => {
       );
       if (data.success) {
         localStorage.setItem("token", data.token);
-        setToken(data.token); // Set in global context
-        toast.success("Loggedin successfully");
+        setToken(data.token);
+        toast.success("Logged in successfully");
         navigate("/home");
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      toast.error("Invalid credentials or server error");
     }
   };
 
   return (
-    <>
-      {/* <Navbar/> */}
-
-      <form
-        className="min-h-[80vh] flex items-center"
-        onSubmit={onSubmitHandler}
+    <div className="flex items-center justify-center min-h-[80vh] bg-gray-50 px-4">
+      <Link
+        to="/"
+        className="absolute top-4 left-4 bg-gray-200 hover:bg-gray-300 text-sm px-4 py-1 rounded-md shadow-sm transition"
       >
-        <div className="flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border border-zinc-400 rounded-xl text-zinc-600 text-sm shadow-lg">
-          <NavLink to="/">
-            <button
-              type="button"
-              className="bg-[#5F6FFF] px-4 py-1 text-white w-full py-2 rounded-md text-base"
-            >
-              ← Back
-            </button>
-          </NavLink>
-          <p className="text-2xl font-semibold">Login</p>
+        ← Back
+      </Link>
+      <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          Welcome Back
+        </h2>
 
-          <div className="w-full">
-            <p>Email</p>
-            <input
-              className="border border-zinc-300 w-full p-2 mt-1"
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              required
-            />
-          </div>
-
-          <div className="w-full">
-            <p>Password</p>
-            <input
-              className="border border-zinc-300 w-full p-2 mt-1"
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              required
-            />
-          </div>
-
+        <form onSubmit={onSubmitHandler} className="flex flex-col gap-4">
+          <input
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
           <button
             type="submit"
-            className="bg-[#5F6FFF] text-white w-full py-2 rounded-md text-base"
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"
           >
             Login
           </button>
-        </div>
-      </form>
-    </>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-gray-600">
+          Don’t have an account?{" "}
+          <Link to="/register" className="text-blue-600 hover:underline">
+            Register here
+          </Link>
+        </p>
+      </div>
+    </div>
   );
 };
 
